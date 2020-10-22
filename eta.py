@@ -110,7 +110,7 @@ class NotebookReader:
                 for guid in note[1]:
                     tag_name = self.ev_tags[guid]
                     tags.append(tag_name)
-            tag = ":".join(tags) 
+            tag = " ".join(tags)  #ANKI uses space to separate tags
 
             fp.write("%s\t"%note[0].encode("utf-8"))
             fp.write("%s\t"%note[3].encode("utf-8"))
