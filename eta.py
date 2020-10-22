@@ -31,4 +31,4 @@ note_store = client.get_note_store()
 
 notebooks = note_store.listNotebooks()
 for nb in notebooks:
-    print "notebook: ", notebook.name
+    print "notebook: ", nb.name
