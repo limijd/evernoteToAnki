@@ -6,6 +6,7 @@ Create ANKI cards from Evernote notebook
 
 Read notes from a given evernote notebook. Create ANKI import file with three fields: title, content, tags
 
+HTML note also works perfectly.
 
 ## Setup
 
