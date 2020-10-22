@@ -52,19 +52,23 @@ class NotebookReader:
 
 
     def clientConnect(self):
+        logging.info("Connect to Evernote...")
         self.ev_client = EvernoteClient(token=self.token, sandbox=False, china=False)
         self.ev_note_store = self.ev_client.get_note_store()
         notebooks = self.ev_note_store.listNotebooks()
+        logging.info("Read all notebooks")
         for nb in notebooks:
             if nb.name == self.notebook_name:
                 self.ev_notebook = nb
 
     def fetchTags(self):
+        logging.info("Read all tags")
         for tag_guid in self.ev_tags.keys():
             tag = self.ev_note_store.getTag(self.token, tag_guid)
             self.ev_tags[tag_guid] = tag.name
 
     def fetchNotesMetadata(self):
+        logging.info("Getting metadata from notebook: %s", self.notebook_name)
         flt = ns_ttypes.NoteFilter()
         flt.notebookGuid = self.ev_notebook.guid
         rs = ns_ttypes.NotesMetadataResultSpec()
@@ -78,13 +82,14 @@ class NotebookReader:
                 for t in n.tagGuids:
                     self.ev_tags[t] = None
             else:
-                print "No Tag found for: %s "% n.title
+                logging.info("No Tag found for: %s ", n.title)
         return
 
     def fetchNotes(self):
+        logging.info("Getting notes content from notebook: %s", self.notebook_name)
         for guid, title in self.ev_notes_metadata:
             rs = ns_ttypes.NoteResultSpec()
-            print "fetch note: %s"%title
+            logging.debug("fetching note: %s",title)
             rs.includeContent = True #ENML contents
             note = self.ev_note_store.getNoteWithResultSpec(self.token, guid, rs)
             assert title==note.title
@@ -102,6 +107,7 @@ class NotebookReader:
             return search.group(0)
 
     def writeAnkiImportTextFile(self, fn):
+        logging.info("Export %d notes from %s to ANKI import file: %s", len(self.ev_notes), self.notebook_name, fn)
         fp = open(fn, "w")
 
         for note in self.ev_notes.values():
@@ -132,8 +138,17 @@ def main():
 
     args = parser.parse_args()
 
+    if args.debug:
+        logging.basicConfig(format='[eta: %(asctime)s %(levelname)s] %(message)s',
+                            datefmt='%Y-%m-%d %H:%M:%S', level=logging.DEBUG)
+    else:
+        logging.basicConfig(format='[eta: %(asctime)s %(levelname)s] %(message)s',
+                            datefmt='%Y-%m-%d %H:%M:%S', level=logging.INFO)
+
     nr = NotebookReader(args.notebook)
     nr.writeAnkiImportTextFile(args.out)
+
+    logging.info("Evernote to ANKI completed successfully.")
 
 if __name__ == "__main__":
     main()
