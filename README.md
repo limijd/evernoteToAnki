@@ -14,6 +14,7 @@ Read notes from a given evernote notebook. Create ANKI import file with three fi
 
 ## Usage
 
+```
 usage: eta.py [-h] [-d] [-nb NOTEBOOK] [-o OUT]
 
 eta: Evernote to Anki
@@ -24,3 +25,4 @@ optional arguments:
   -nb NOTEBOOK, --notebook NOTEBOOK
                         Evernote notebook to be read
   -o OUT, --out OUT     output file for importing to ANKI
+```
