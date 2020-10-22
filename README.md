@@ -10,8 +10,17 @@ HTML note also works perfectly.
 
 ## Setup
 
-* You need to obtain an Evernote developer token. It disabled by default. Need to ask customer service to enable.
+* An Evernote developer token is required. Since it's disabled by default now, you can just ask Evernote customer service to enable it.
+* Install evernoteToAnki and evernote API
 
+```
+%> git clone /Users/wli/dev-sandbox/limijd.github/evernoteToAnki
+%> cd evernoteToAnki
+%> git submodule init
+%> git submodule update
+```
+
+* Install any required Python module if "eta.py" can't run
 
 ## Usage
 
