@@ -21,6 +21,8 @@ import evernote.edam.notestore.ttypes as ns_ttypes
 from evernote.api.client import EvernoteClient
 #from bs4 import BeautifulSoup
 
+ANKI_CONTENT_LIMIT = 131072
+
 class NotebookReader:
     def __init__(self, notebook_name):
         self.notebook_name = notebook_name
@@ -42,7 +44,7 @@ class NotebookReader:
         return
 
     def readToken(self):
-        token_file = os.path.expanduser("~/.evernote_token.json")
+        token_file = os.path.expanduser("~/.evernote_to_anki.config.json")
         with open(token_file, "r") as fp:
             js = json.load(fp)
             assert "token" in js
@@ -117,6 +119,12 @@ class NotebookReader:
                     tag_name = self.ev_tags[guid]
                     tags.append(tag_name)
             tag = " ".join(tags)  #ANKI uses space to separate tags
+
+
+            global ANKI_CONTENT_LIMIT
+            if len(note[3]) > int(ANKI_CONTENT_LIMIT*0.8):
+                logging.info("Skip note because content too long for ANKI: %s", note[0])
+                continue
 
             fp.write("%s\t"%note[0].encode("utf-8"))
             fp.write("%s\t"%note[3].encode("utf-8"))

@@ -1,3 +1,6 @@
 [submodule "evernote"]
 	path = evernote
 	url = git://github.com/evernote/evernote-sdk-python/
+[submodule "ankicmd"]
+	path = ankicmd
+	url = https://github.com/limijd/ankicmd.git
