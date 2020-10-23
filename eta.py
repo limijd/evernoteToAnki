@@ -11,7 +11,7 @@ import argparse
 import logging
 
 SCRIPT_PATH=os.path.dirname(os.path.realpath(__file__))
-sys.path.append("%s/evernote/lib"%SCRIPT_PATH)
+sys.path.insert(0, "%s/evernote/lib"%SCRIPT_PATH)
 
 import hashlib
 import binascii
