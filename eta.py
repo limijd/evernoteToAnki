@@ -44,7 +44,7 @@ class NotebookReader:
         return
 
     def readToken(self):
-        token_file = os.path.expanduser("~/.evernote_to_anki.config.json")
+        token_file = os.path.expanduser("~/.configs.secure/evernote_to_anki.config.json")
         with open(token_file, "r") as fp:
             js = json.load(fp)
             assert "token" in js
