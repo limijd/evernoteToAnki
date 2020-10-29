@@ -94,6 +94,7 @@ class NotebookReader:
             logging.debug("fetching note: %s",title)
             rs.includeContent = True #ENML contents
             note = self.ev_note_store.getNoteWithResultSpec(self.token, guid, rs)
+
             assert title==note.title
             #self.beautifyContent(note.content)
             content = self.processNoteContent(note.content)
@@ -113,13 +114,19 @@ class NotebookReader:
         fp = open(fn, "w")
 
         for note in self.ev_notes.values():
+            is_english = False
             tags = []
             if note[1]:
                 for guid in note[1]:
                     tag_name = self.ev_tags[guid]
                     tags.append(tag_name)
+                    if tag_name.lower == "english":
+                        is_english = True
             tag = " ".join(tags)  #ANKI uses space to separate tags
 
+            if is_english:
+                #English will be imported to different ANKI deck.
+                continue
 
             global ANKI_CONTENT_LIMIT
             if len(note[3]) > int(ANKI_CONTENT_LIMIT*0.8):
