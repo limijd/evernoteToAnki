@@ -36,3 +36,5 @@ optional arguments:
                         Evernote notebook to be read
   -o OUT, --out OUT     output file for importing to ANKI
 ```
+
+## other
