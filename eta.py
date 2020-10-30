@@ -120,7 +120,7 @@ class NotebookReader:
                 for guid in note[1]:
                     tag_name = self.ev_tags[guid]
                     tags.append(tag_name)
-                    if tag_name.lower == "english":
+                    if tag_name.lower() == "english":
                         is_english = True
             tag = " ".join(tags)  #ANKI uses space to separate tags
 
