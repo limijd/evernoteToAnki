@@ -101,8 +101,8 @@ class NotebookReader:
             self.ev_notes[note.contentHash] = [title, note.tagGuids, note.contentHash, content]
 
     def processNoteContent(self, content):
-        content = re.sub(r'\t', '  ', content)
-        content = re.sub(r'\n', '<br>', content)
+        content = re.sub(r'\t', '  ', content, flags=re.UNICODE)
+        content = re.sub(r'\n', '<br>', content, flags=re.UNICODE)
         search = re.search(r'<en-note>.*</en-note>', content, flags=re.UNICODE)
         if not search:
             return content
